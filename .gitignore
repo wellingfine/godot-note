@@ -1,0 +1,12 @@
+# Godot 4 忽略规则
+.godot/
+*.tmp
+*.temp
+*.import
+# Mono / C# 编译产物
+.mono/
+bin/
+obj/
+# 编辑器/系统文件
+.DS_Store
+Thumbs.db
