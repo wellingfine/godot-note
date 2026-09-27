@@ -105,10 +105,14 @@ Godot 帮你生成的（源码里看不到，编译产物里有）：
 public static partial class SignalName {
   public static readonly StringName MobDied = "MobDied";   // 信号名常量
 }
-public event MobDiedEventHandler MobDied;        // 让你能写 += / -=（底层是 Connect/Disconnect）
+// 注意：C# 侧的 += / -= 只是往一个普通委托字段里加，并不是引擎的 Connect/Disconnect
+public event MobDiedEventHandler MobDied;
 protected void EmitSignalMobDied(int score)     // 强类型发射方法
-  => EmitSignal(SignalName.MobDied, score);
+  => EmitSignal(SignalName.MobDied, [score]);
 ```
+
+> 上面是简化版，完整产物（含 `backing_` 委托字段、`RaiseGodotClassSignalCallbacks` 回调）
+> 实测记录见 `signals/csharp-signal-emit-pipeline.md`。
 
 所以这些东西**不是你写的，也不是 C# 自带的**，全是生成的：
 
@@ -116,7 +120,7 @@ protected void EmitSignalMobDied(int score)     // 强类型发射方法
 | --- | --- | --- |
 | `[Signal]` | Godot 提供的特性 | 编译期标记，告诉生成器「这是信号」 |
 | `SignalName.MobDied` | 生成 | 信号名常量，避免手写字符串 |
-| `MobDied += / -=` | 生成 | 订阅/退订，底层走引擎的 Connect/Disconnect |
+| `MobDied += / -=` | 生成 | 订阅/退订，只操作一个普通委托字段（不走引擎 Connect） |
 | `EmitSignalMobDied(score)` | 生成 | 强类型发射（**protected**，见 §4） |
 | `EmitSignal(StringName, params Variant[])` | Godot 引擎 API | 真正把信号发出去的底层方法 |
 
@@ -294,5 +298,6 @@ public void AddScore(int amount) {
 
 ## 相关笔记
 
+- `signals/csharp-signal-emit-pipeline.md` — 发射一次走了多远：源码生成器完整产物 + 装箱/跨边界链路 + 性能量级
 - `signals/csharp-event-vs-godot-signal.md` — 该用 `[Signal]` 还是 C# 原生 `event`（选型）
 - `nodes/node-path-and-get-node.md` — 为什么 `/root/Game/Player` 这种硬路径不可靠
