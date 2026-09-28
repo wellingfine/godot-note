@@ -13,8 +13,8 @@
 
 ```
 godot-note/
-├── godot/              # Godot 学习笔记（9 篇）
-│   ├── signals/        信号与事件（3 篇 + 1 已合并）
+├── godot/              # Godot 学习笔记（8 篇）
+│   ├── signals/        信号与事件（3 篇）
 │   ├── nodes/          节点与场景用法（4 篇）
 │   ├── animation/      动画（1 篇）
 │   ├── tooling/        工具链与 IDE（1 篇）
@@ -36,7 +36,6 @@ godot-note/
 | signals/ | [csharp-signal-basics.md](./godot/signals/csharp-signal-basics.md) ⭐ | `[Signal]` 从零到用：为什么需要信号、最小可用示例（声明/发射/订阅/退订）、`SignalName` 与 `EmitSignalXxx` 都是源码生成器产物、名字推导规则、发射方法是 `protected` 要包一层对外发射口、四条硬性规则（`GD0201/0202/0203/GD0001`）、Autoload 事件总线完整写法、IDE 标红与重命名的坑 |
 | signals/ | [csharp-event-vs-godot-signal.md](./godot/signals/csharp-event-vs-godot-signal.md) | 用 `[Signal]` 还是原生 `event`：默认用 event，只在跨 GDScript、要编辑器连线、订阅内置节点事件时用信号；`BodyEntered +=` 写法；编辑器连线 + 代码订阅导致回调触发两次的坑 |
 | signals/ | [csharp-signal-emit-pipeline.md](./godot/signals/csharp-signal-emit-pipeline.md) | 发射一次信号走了多远：dump 源码生成器真实产物、`int→Variant` 装箱 → 跨 C#/C++ → 引擎 → 拆箱的七步链路与开销、性能量级判断；C# 侧 `+=` 只是委托 `+=`，不走引擎 Connect，编辑器 / `IsConnected()` 看不到 |
-| signals/ | ~~csharp-signal-source-generator.md~~ | 已合并进 `csharp-signal-basics.md`，仅留跳转说明 |
 | nodes/ | [node-path-and-get-node.md](./godot/nodes/node-path-and-get-node.md) | C# 取节点的全部姿势：绝对路径与 `/root`、相对路径与 `..`、场景唯一名 `%`、`[Export]` 拖引用、`GetParent/GetChild/FindChild/Owner`、`GetTree().Root` 与 `CurrentScene`、分组；`GetNode` 返回 null 而非抛异常、`_Ready` 取兄弟节点的时序坑 |
 | nodes/ | [timer-node-cooldown.md](./godot/nodes/timer-node-cooldown.md) | Timer 节点做射击冷却：`wait_time` + `one_shot` 配置、`IsStopped()` 当门锁、`Start/Stop/TimeLeft/Paused` 与 Timeout 信号；对比手动累加 delta 与常见踩坑 |
 | nodes/ | [3d-forward-axis-and-basis.md](./godot/nodes/3d-forward-axis-and-basis.md) | 3D 方向约定：为什么「前」是 -Z；Basis 是旋转+缩放矩阵、轴取列；Basis/GlobalBasis、Position/GlobalPosition 对照表；`GlobalPosition += -GlobalBasis.Z.Normalized() * speed * delta` |
