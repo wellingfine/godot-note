@@ -71,16 +71,15 @@ public void takeDamage() => _batModel?.PlayOneShotAnimation();
 ## 常用参数路径
 
 ```csharp
-_animationTree.Set("parameters/OneShot/request", 1);   // 触发
-_animationTree.Set("parameters/playback", ...);        // StateMachine 用 travel()
+_animationTree.Set("parameters/OneShot/request", 1);   // 触发 OneShot
 _animationTree.Get("parameters/OneShot/active");       // 是否正在播
 ```
 
-若是 `AnimationNodeStateMachine`（而不是 BlendTree），则用：
+若是 `AnimationNodeStateMachine`（而不是 BlendTree），则取出 playback 对象再 `Travel()`：
 
 ```csharp
-_animationTree.Set("parameters/playback", playback);   // 或强转后
-((AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback")).Travel("hit");
+var playback = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
+playback.Travel("hit");
 ```
 
 ## 踩坑

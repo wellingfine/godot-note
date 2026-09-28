@@ -7,7 +7,7 @@ Godot 4（C# 为主）的学习记录，按主题分子目录存放。新增笔�
 ```
 godot/
 ├── nodes/      节点与场景用法（4 篇）
-├── signals/    信号与事件（3 篇）
+├── signals/    信号与事件（3 篇 + 1 已合并）
 ├── animation/  动画（1 篇）
 ├── tooling/    工具链与 IDE（1 篇）
 └── README.md   本文件
@@ -23,7 +23,7 @@ godot/
 | --- | --- |
 | **[csharp-signal-basics.md](./signals/csharp-signal-basics.md)** ⭐ | `[Signal]` 从零到用：为什么需要信号（打死怪→玩家加分，对比直接 `GetNode` 的耦合）、最小可用示例（声明/发射/订阅/退订）、`[Signal]` 只是编译期标记而 `SignalName` / `MobDied` event / `EmitSignalMobDied` 都是源码生成器产物、名字推导规则、发射方法是 `protected` 所以要包一层对外发射口、四条硬性规则（`GD0201/0202/0203/GD0001`）、Autoload 事件总线完整写法、IDE 标红与重命名的坑、动手验证小实验、术语小抄 |
 | [csharp-event-vs-godot-signal.md](./signals/csharp-event-vs-godot-signal.md) | C# 项目该用 `[Signal]` 还是原生 `event`：默认用 event（性能/类型安全/可重构），只在跨 GDScript、要编辑器连线、订阅内置节点事件时用信号；`BodyEntered +=` 的 C# 事件写法，以及「编辑器连线 + 代码订阅导致回调触发两次」的坑 |
-| [csharp-signal-emit-pipeline.md](./signals/csharp-signal-emit-pipeline.md) | 发射一次信号走了多远：`dotnet build /p:EmitCompilerGeneratedFiles=true` dump 源码生成器真实产物（`SignalName` / `backing_` 委托 / `EmitSignalXxx` / `RaiseGodotClassSignalCallbacks`）、`int→Variant` 装箱 → 跨 C#/C++ → 引擎 → 拆箱 → 委托 Invoke 的七步链路与每步开销、性能量级判断（一秒几次随便用、一帧几十次换 event）；**修正**：C# 的 `+=` 只是 `backing_ += value`，不走引擎 Connect，所以编辑器/`IsConnected()` 看不到 |
+| [csharp-signal-emit-pipeline.md](./signals/csharp-signal-emit-pipeline.md) | 发射一次信号走了多远：`dotnet build /p:EmitCompilerGeneratedFiles=true` dump 源码生成器真实产物（`SignalName` / `backing_` 委托 / `EmitSignalXxx` / `RaiseGodotClassSignalCallbacks`）、`int→Variant` 装箱 → 跨 C#/C++ → 引擎 → 拆箱 → 委托 Invoke 的七步链路与每步开销、性能量级判断（一秒几次随便用、一帧几十次换 event）；C# 的 `+=` 只是 `backing_ += value`，不走引擎 Connect，所以编辑器/`IsConnected()` 看不到 |
 
 ### nodes/ — 节点与场景用法
 
@@ -74,5 +74,7 @@ godot/
 
 - 新笔记放进对应子目录；没有合适类目就新建目录，并在本文件登记。
 - 每篇加进「笔记索引」对应表格，用一句话说清「解决什么问题」，关键词（报错码、API 名）尽量写进去，方便全文搜索。
+- 同步更新根目录 `README.md` 的「全部文章目录」。完整约定见 [`AGENT.md`](../AGENT.md)。
+- 已合并的 `csharp-signal-source-generator.md` 仅保留跳转说明，不列入正文索引。
 
 

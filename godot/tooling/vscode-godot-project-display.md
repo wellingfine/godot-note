@@ -17,7 +17,7 @@
 
 本仓库实测（`git ls-files`）：`icon.svg.import`、`Player.cs.uid`、`mob/bat/bat_model.glb.import` 等全部在版本库里 —— 也就是说**它们不能进 `.gitignore`**，只能在 VS Code 里"眼不见为净"。
 
-## 2. 三种过滤机制别搞混
+## 2. 几种过滤机制别搞混
 
 | 机制 | 作用范围 | 影响 git 吗 |
 | --- | --- | --- |

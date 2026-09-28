@@ -17,9 +17,9 @@
 
 | 维度 | Godot `[Signal]` | C# `event` |
 | --- | --- | --- |
-| 性能 | 较慢（C# ↔ C++ 引擎层跨语言绑定 + 反射） | 极快（纯 C# 委托，无跨语言开销） |
-| 类型安全 | 较弱（参数变动/强转易运行时异常） | 极强（编译期检查） |
-| 重构友好度 | 改名要手动改字符串或 `SignalName` | IDE 一键重命名，全项目同步 |
+| 性能 | 较慢（参数装箱成 `Variant` + 进出引擎的跨 C#/C++ 往返） | 极快（纯 C# 委托，无跨语言开销） |
+| 类型安全 | 较弱（参数走 `Variant` 装箱；编辑器连线按方法名字符串匹配，错了运行时才炸） | 极强（编译期检查） |
+| 重构友好度 | `SignalName.Xxx` / `EmitSignalXxx()` 跟着委托名自动改，但编辑器连线、GDScript 的 `connect("…")` 和裸字符串不会 | IDE 一键重命名，全项目同步 |
 | 跨语言兼容 | 完全兼容（GDScript 可连可触发） | 不兼容（GDScript 无法监听） |
 | 编辑器集成 | 支持（节点面板连线） | 不支持（无法可视化连线） |
 
@@ -31,7 +31,7 @@
 [Signal]
 public delegate void HealthChangedEventHandler(int current, int max);
 
-// 触发：字符串名，改名时编译器不会提醒
+// 触发：SignalName.HealthChanged 是生成的常量，跟着委托名自动更新
 EmitSignal(SignalName.HealthChanged, hp, maxHp);
 ```
 

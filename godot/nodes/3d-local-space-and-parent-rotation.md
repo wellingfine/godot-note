@@ -51,7 +51,7 @@ bullet.GlobalTransform = _muzzle.GlobalTransform;   // 跨父子一律用 Global
 
 ```csharp
 // 子弹自身：Godot 的"前"是 -Z
-GlobalPosition += -GlobalBasis.Z * Speed * (float)delta;
+GlobalPosition += -GlobalBasis.Z.Normalized() * Speed * (float)delta;
 ```
 
 要点：跨父子赋值用 `GlobalTransform/GlobalPosition/GlobalBasis`，用 `Transform/Position` 写的是父级局部坐标；方向统一 `-Basis.Z`，别凭感觉写 `+Z`。

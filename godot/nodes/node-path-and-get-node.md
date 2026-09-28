@@ -24,7 +24,7 @@ root              ← GetTree().Root，一个 Window
 注意点：
 
 - `Game` 是**场景里根节点的名字**，`game.tscn` 是文件名，两者可以不一样。改名 `.tscn` 文件不会改节点名，反过来也一样。
-- autoload 的单例节点是直接挂在 `/root` 下的，所以 `GetNode<Game>("/root/Game")` 这种写法在单例场景里最常见，也最合理。
+- autoload 的单例节点同样直接挂在 `/root` 下（如 `/root/GameEvents`）；而本文的 `/root/Game` 是**主场景根节点**。两者都在 `/root` 下，取的时候别把主场景当成 autoload。
 
 ## 2. 相对路径：相对当前节点（本项目其余写法）
 

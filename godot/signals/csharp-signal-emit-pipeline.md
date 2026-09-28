@@ -70,11 +70,9 @@ protected override void RaiseGodotClassSignalCallbacks(in godot_string_name sign
 }
 ```
 
-### ⚠️ 重要修正
+### `+=` 不进引擎的连接表
 
-很多资料（包括本目录旧笔记里的说法）写「C# 的 `+=` 底层走 `Connect`/`Disconnect`」——**不对**。
-看 ② 就清楚了：C# 侧的 `+=` 只是 `backing_MobDied += value`，**完全不进引擎的连接表**。
-后果是：
+C# 侧的 `+=` 就是 ② 里的 `backing_MobDied += value`，一个普通委托字段，**不走 `Connect`/`Disconnect`**。所以：
 
 - 编辑器信号面板**看不到**你在 C# 里写的订阅
 - `IsConnected()` 查不到它，`Disconnect()` 也断不掉它
@@ -151,7 +149,7 @@ public void EmitPlayerFell() => PlayerFell?.Invoke();
 | `event Action<…>` | .NET 原生委托 | 不知道 | 纯 C# 内部解耦，性能最好 |
 
 引擎内置信号的 `+=` 看着和自定义信号一样，其实它走的是引擎那套（Godot 给内置信号生成的访问器是真的 `Connect`）；
-只有**你自己声明的** `[Signal]`，C# 侧 `+=` 才是纯委托（见 §2 修正）。
+只有**你自己声明的** `[Signal]`，C# 侧 `+=` 才是纯委托（见 §2）。
 
 ---
 

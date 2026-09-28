@@ -73,7 +73,7 @@ csharp_style_expression_bodied_accessors = true:silent
 
 老版 OmniSharp 还要确认设置里 `omnisharp.enableEditorConfigSupport = true`；C# Dev Kit 默认读取 `.editorconfig`，无需额外配置。
 
-## 6. Godot 相关的补充
+## 6. Godot 相关
 
 - `base._Ready()` 在 Godot 4 里是**空实现**，调用它没有副作用，补全出来后直接删掉那行即可。
 - Roslyn 没有「不生成 base 调用」的选项（Rider 有这个设置，VS Code 没有），只能手动删。

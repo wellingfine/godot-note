@@ -52,7 +52,7 @@ public void Shoot() {
 | `Start(double timeSec = -1)` | 开始（可选临时覆盖 wait_time）；已运行时调用会重置倒计时 |
 | `Stop()` | 停止，`IsStopped()` 立刻变 true |
 | `IsStopped()` | 是否没在跑。未进树（例如 `_Ready` 之前）时恒为 true |
-| `TimeLeft` | 剩余时间，用 Cook 节点显示冷却进度条就靠它 |
+| `TimeLeft` | 剩余时间，用 `ProgressBar` / `TextureProgressBar` 显示冷却进度就靠它 |
 | `Paused` / `SetPaused(bool)` | 暂停而不清零（注意 `Node.ProcessMode` 也会受影响） |
 | `Timeout` 信号 | 倒计时归零时发出（One Shot 的发出一次，非 One Shot 的周期重复） |
 
